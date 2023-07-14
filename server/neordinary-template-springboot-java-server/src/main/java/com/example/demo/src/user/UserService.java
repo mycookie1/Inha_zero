@@ -99,9 +99,8 @@ public class UserService {
         userRepository.save(user);
 
         Random rand = new Random();
-        int size = rand.nextInt(3);
         int color = rand.nextInt(3);
-        Tree tree = new Tree(size+1,color+1,0);
+        Tree tree = new Tree(1,color+1,0);
         tree.setUserId(user);
         Tree savedTree = treeRepository.save(tree);
 
