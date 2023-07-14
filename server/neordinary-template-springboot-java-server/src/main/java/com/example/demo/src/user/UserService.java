@@ -67,6 +67,7 @@ public class UserService {
         Tree tree = user.getTrees().get(index-1);
 
         List<Tree> treeList = treeRepository.findAllByUserId(user);
+        treeList.stream().sorted(Comparator.comparing(Tree::getTreeId));
         if(tree.getScore() < 50){
             treeList.remove(index-1);
         }
@@ -110,21 +111,39 @@ public class UserService {
         }
         int index = user.getTrees().size();
         Tree tree = user.getTrees().get(index-1);
+        System.out.println("now tree score "+ tree.getScore());
+        System.out.println("now score "+ score);
 
         List<Tree> treeList = treeRepository.findAllByUserId(user);
         GetScore getScore = new GetScore(0,false,0,false);
         if(tree.getScore() + score >= 50){
+            System.out.println("50dltkd "+ tree.getScore() + score);
+
             int sum = tree.getScore() + score;
             tree.setScore(50);
             Random rand = new Random();
             int color = rand.nextInt(3);
             Tree newTree = new Tree(1,color+1,sum - 50);
+            newTree.setUserId(user);
+            if(20 <= sum - 50 && sum - 50 < 40){
+                newTree.setSize(2);
+            }
+            else if(sum - 50 >= 40){
+                newTree.setSize(3);
+            }
             treeRepository.save(newTree);
             getScore.setCurrentTreeScore(sum-50);
             getScore.setCurrentTreeScoreIs(true);
         }
         else{
+            System.out.println("50gfdglkd "+ tree.getScore() + score);
             tree.setScore(tree.getScore() + score);
+            if(20 <= tree.getScore() && tree.getScore() < 40){
+                tree.setSize(2);
+            }
+            else if( tree.getScore() >= 40){
+                tree.setSize(3);
+            }
             getScore.setCurrentTreeScore(tree.getScore());
         }
         if(user.getScore() + score >= 150){
