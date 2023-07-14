@@ -2,6 +2,8 @@ package com.example.demo.src.user;
 
 import com.example.demo.common.exceptions.BaseException;
 import com.example.demo.common.response.BaseResponse;
+import com.example.demo.src.user.DTO.GetAllReceipt;
+import com.example.demo.src.user.DTO.GetScore;
 import com.example.demo.src.user.DTO.GetTreeDetail;
 import com.example.demo.src.user.DTO.GetTrees;
 import com.example.demo.utils.JwtService;
@@ -104,23 +106,44 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-//    @Tag(name = "자신이 키우는 나무 출력 API")
-//
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "404", description = "일치하는 유저가 없습니다."
-//                    , content = @Content(schema = @Schema(implementation = BaseResponse.class))),
-//            @ApiResponse(responseCode = "500", description = "데이터베이스 연결에 실패하였습니다."
-//                    , content = @Content(schema = @Schema(implementation = BaseResponse.class)))
-//    })
-//    @Operation(summary = "유저가 키우는 나무 출력", description = "유저가 키우는 나무 디테일 출력 API")
-//    @GetMapping("/receipt")
-//    public BaseResponse<String> getOneTree(@RequestParam(required = true) String url) {
-//
-//        try {
-//            return new BaseResponse<>(userService.getReceipt(url));
-//        } catch (BaseException exception) {
-//            log.error(exception.getMessage());
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
+    @Tag(name = "영수증 API")
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "일치하는 유저가 없습니다."
+                    , content = @Content(schema = @Schema(implementation = BaseResponse.class))),
+            @ApiResponse(responseCode = "500", description = "데이터베이스 연결에 실패하였습니다."
+                    , content = @Content(schema = @Schema(implementation = BaseResponse.class)))
+    })
+    @Operation(summary = "영수증 API", description = "영수증 API")
+    @GetMapping("/receipt")
+    public BaseResponse<GetAllReceipt> getOneTree(@RequestParam(required = true) String imageUrl) {
+
+        try {
+            return new BaseResponse<>(userService.getReceipt(imageUrl));
+        } catch (BaseException exception) {
+            log.error(exception.getMessage());
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    @Tag(name = "점수 확인 API")
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "일치하는 유저가 없습니다."
+                    , content = @Content(schema = @Schema(implementation = BaseResponse.class))),
+            @ApiResponse(responseCode = "500", description = "데이터베이스 연결에 실패하였습니다."
+                    , content = @Content(schema = @Schema(implementation = BaseResponse.class)))
+    })
+
+    @Operation(summary = "점수 확인 API", description = "점수 확인 API")
+    @GetMapping("/score/{userId}")
+    public BaseResponse<GetScore> getScore(@PathVariable("userId") Long userId, @RequestParam(required = true) Integer score) {
+
+        try {
+            return new BaseResponse<>(userService.getScore(userId,score));
+        } catch (BaseException exception) {
+            log.error(exception.getMessage());
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 }

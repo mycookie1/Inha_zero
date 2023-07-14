@@ -34,7 +34,6 @@ public class OpenController {;
     /**
      * OpenAI 키워드  - 키워드 입력 시 penAI 조회 API
      * @param keyword 글 작성 시 포함하고 싶은 내용
-     * @param  format 글 작성 형태
      * @return OpenAI 결과 String
      */
 
@@ -49,12 +48,10 @@ public class OpenController {;
             @Parameter(name = "format", description = "chatGPT가 생성할 형식", example = "편지"),
     })
     @GetMapping("/result")
-    public BaseResponse<GetOpenAIReqDto> getOpenAI(@RequestParam(required = true) String keyword, @RequestParam String format) throws BaseException {
-        if(format.isEmpty()){
-            format = "편지";
-        }
+    public BaseResponse<GetOpenAIReqDto> getOpenAI(@RequestParam(required = true) String keyword) throws BaseException {
+
         // 프로프트 생성
-        String prompt = keyword + ", " + format + " 형식으로 50자 이내로 작성해줘.";
+        String prompt = keyword +"에서 상품명만 추출해서 ,로 구분해줘";
 
         // header 등록: Content-Type, Authorization(API KEY), Message
         HttpHeaders headers = new HttpHeaders();
@@ -75,8 +72,10 @@ public class OpenController {;
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Map> response = restTemplate.postForEntity(ENDPOINT, requestEntity, Map.class);
             // answer 추출
+            System.out.println("openai로 추출    "+response.getBody().toString());
             String[] responses = response.getBody().get("choices").toString().split("role=assistant, content=|}, finish_reason=stop, index=0}");
             GetOpenAIReqDto getOpenAIResDto = new GetOpenAIReqDto(responses[1]);
+
             return new BaseResponse<>(getOpenAIResDto);
         }
         catch (Exception e){
