@@ -20,5 +20,8 @@ public class GetTrees {
     private Integer score;
     @Schema(name = "treeList", example = "[{크기, 색},{크기, 색}]", description = "거목들의 정보")
     private List<GetOneTree> treeList;
+    @Schema(name = "currentTree", example = "{크기, 색}", description = "현재 키우는 나무 정보")
+    private GetOneTree currentTree;
+
 }
 
