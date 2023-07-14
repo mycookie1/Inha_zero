@@ -67,12 +67,38 @@ public class UserController {
     @Parameters({
             @Parameter(name = "userId", description = "유저인덱스", example = "1"),
     })
-    @Operation(summary = "유저가 키우는 나무 출력", description = "유저가 키우는 나무 디테일 출력 API")
+    @Operation(summary = "유저가 키우는 나무들 출력", description = "유저가 키우는 나무들 API")
     @GetMapping("/trees/{userId}")
     public BaseResponse<GetTrees> getTrees(@PathVariable("userId") Long userId) {
 
         try {
             return new BaseResponse<>(userService.getTrees(userId));
+        } catch (BaseException exception) {
+            log.error(exception.getMessage());
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * current tree 생성 API
+     */
+    @Tag(name = "current tree 생성 API")
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "일치하는 유저가 없습니다."
+                    , content = @Content(schema = @Schema(implementation = BaseResponse.class))),
+            @ApiResponse(responseCode = "500", description = "데이터베이스 연결에 실패하였습니다."
+                    , content = @Content(schema = @Schema(implementation = BaseResponse.class)))
+    })
+    @Parameters({
+            @Parameter(name = "userId", description = "유저인덱스", example = "1"),
+    })
+    @Operation(summary = "current tree 생성", description = "current tree 생성API")
+    @PostMapping("/current/{userId}")
+    public BaseResponse<String> createTree(@PathVariable("userId") Long userId) {
+
+        try {
+            return new BaseResponse<>(userService.createTree(userId));
         } catch (BaseException exception) {
             log.error(exception.getMessage());
             return new BaseResponse<>(exception.getStatus());

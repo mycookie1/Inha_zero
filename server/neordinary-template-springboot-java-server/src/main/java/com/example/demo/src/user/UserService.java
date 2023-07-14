@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+import java.util.Random;
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -78,9 +78,34 @@ public class UserService {
         GetTrees getTrees= new GetTrees(user.getScore(),tree.getScore(),getOneTreeList,new GetOneTree(tree.getSize(), tree.getColor()));
 
         return getTrees;
-
     }
-//    public String getReceipt(String url1) throws BaseException {
-//
-//    }
+
+    public String createTree(Long userId) throws BaseException {
+
+        User user;
+        try {
+            user = userRepository.findUserByUserId(userId);
+            System.out.println(user.getUserId());
+        }catch (Exception exception) {
+            log.error(exception.getMessage());
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+        List<Tree> treeList = treeRepository.findAllByUserId(user);
+        int sum = 0;
+        for(Tree tree: treeList){
+            sum += tree.getScore();
+        }
+        user.setScore(sum);
+        userRepository.save(user);
+
+        Random rand = new Random();
+        int size = rand.nextInt(3);
+        int color = rand.nextInt(3);
+        Tree tree = new Tree(size+1,color+1,0);
+        tree.setUserId(user);
+        Tree savedTree = treeRepository.save(tree);
+
+        return savedTree.getTreeId()+"번 나무생성";
+    }
+
 }
