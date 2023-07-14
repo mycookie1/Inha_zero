@@ -3,8 +3,7 @@ spring:
     init:
       platform: mysql
   datasource:
-    url: jdbc:mysql://inha.cman4gbbzvfp.ap-northeast-2.rds.amazonaws.com:3306/inha?autoReconnect=true&setTimezone=Asia/Seoul # 변경해주세요
-#    url: jdbc:mysql://127.0.0.1:3306/Art?autoReconnect=true&setTimezone=Asia/Seoul # 변경해주세요
+    url: jdbc:mysql://hack.cman4gbbzvfp.ap-northeast-2.rds.amazonaws.com:3306/hack?autoReconnect=true&setTimezone=Asia/Seoul # 변경해주세요
     username: root # username
     password: password # password
     driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
