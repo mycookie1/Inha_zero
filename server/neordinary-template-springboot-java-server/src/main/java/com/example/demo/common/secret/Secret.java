@@ -6,7 +6,7 @@ package com.example.demo.common.secret;
 public class Secret {
     public static String JWT_SECRET_KEY = "UwKYibQQgkW7g-*k.ap9kje-wxBHb9wdXoBT4vnt4P3sJWt-Nu";
     //이전에 사용하던 키
-    public static String OPEN_API_SECRET_KEY = "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";
+    public static String OPEN_API_SECRET_KEY = "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";
     //새로만든 키
     //
   
