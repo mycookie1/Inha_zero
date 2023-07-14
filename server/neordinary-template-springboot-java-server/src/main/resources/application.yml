@@ -28,10 +28,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 spring.sql.init.platform: mysql
 server:
   port: 9000
-
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org.springframework.security: DEBUG
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -90,4 +94,3 @@ jwt:
 #    properties:
 #      hibernate:
 #        format_sql: true
-
