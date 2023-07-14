@@ -60,7 +60,7 @@ public class OpenController {;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         //TODO: 시크릿키 등록
-        headers.set("Authorization", "Bearer " + "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");
+        headers.set("Authorization", "Bearer " + Secret.OPEN_API_SECRET_KEY);
 
         Map<String, Object> requestBody = new HashMap<>();
 
