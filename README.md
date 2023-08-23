@@ -1,4 +1,4 @@
-# Gardener_Server
+# Gardener_Server(최우수상)
 
 <img width="1309" alt="image" src="https://github.com/mycookie1/Inha_zero/assets/103025266/30517cee-15ff-4519-a7d2-71fb79f9b7be">
 
